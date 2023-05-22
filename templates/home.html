@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Django APP</title>
+</head>
+
+<body>
+
+    {% for post in posts %}
+
+        <h3>{{ post.title }}</h3>
+
+        <a href="/post/{{ post.id }}">Посмотреть</a>
+
+        <span>{{ post.created }}</span>
+
+        <p>{{ post.content }}</p>
+
+        <hr>
+
+    {% endfor %}
+
+</body>
+</html>
