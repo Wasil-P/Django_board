@@ -1,3 +1,5 @@
 .venv
-
-
+.idea
+_pycache_
+django_board/__pycache__/
+todolist/__pycache__/

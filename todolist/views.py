@@ -61,6 +61,9 @@ def edit_post(request, post_id: int):
 def delete_post(request, post_id: int):
 
     post = get_object_or_404(Post, id=post_id)
-    post.delete()
+    if request.method == "POST":
+        post.delete()
+    else:
+        return render(request, "show_post.html", {"post": post})
 
-    return render("delete.html", {"post": post})
+    return render(request,"delete.html", {"post": post})

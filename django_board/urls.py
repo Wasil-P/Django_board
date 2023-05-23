@@ -23,6 +23,6 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("create/", views.create_post, name="post_create"),
     path("post/<int:post_id>", views.show_post, name="post_show"),
-    path("post/<int:post_id>", views.edit_post, name="post_edit"),
-    path("post/<int:post_id>", views.delete_post, name="post_delete")
+    path("post/<int:post_id>/edit", views.edit_post, name="post_edit"),
+    path("post/<int:post_id>/delete", views.delete_post, name="post_delete")
 ]
