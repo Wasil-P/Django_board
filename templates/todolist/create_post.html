@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Создание заметки</title>
-</head>
-<body>
+{% extends "todolist/base.html" %}
+
+
+{% block content %}
 
     <div>
         {% for error in errors %}
@@ -14,29 +11,24 @@
             </p>
 
         {% endfor %}
+
     </div>
 
     <form method="post">
 
         {% csrf_token %}
 
-        <div>
-            <label>
-                Заголовок
-                <input name="title">
-            </label>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Заголовок</label>
+                <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Название">
         </div>
 
-        <div>
-            <label>
-                Содержимое
-                <textarea name="text"></textarea>
-            </label>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Содержимое</label>
+            <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Текст заметки"></textarea>
         </div>
-
-        <input type="submit" value="Отправить">
+        <button type="submit" class="btn btn-info" style="box-shadow: 3px 3px #205067">Отправить</button>>
 
     </form>
 
-</body>
-</html>
+{% endblock %}

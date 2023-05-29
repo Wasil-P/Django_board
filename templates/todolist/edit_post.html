@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit: {{ post.title }}</title>
-</head>
-<body>
+{% extends "todolist/base.html" %}
+
+
+{% block content %}
 
     <div>
         {% for error in errors %}
@@ -20,23 +17,15 @@
 
         {% csrf_token %}
 
-        <div>
-            <label>
-                Заголовок
-                <input name="title" value="{{ post.title }}">
-            </label>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Заголовок</label>
+                <input type="text" name="title" value="{{ post.title }}" class="form-control" id="exampleFormControlInput1" >
         </div>
 
-        <div>
-            <label>
-                Содержимое
-                <textarea name="text">{{ post.content }}</textarea>
-            </label>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Содержимое</label>
+            <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ post.content }}</textarea>
         </div>
+        <button type="submit" class="btn btn-info" style="box-shadow: 3px 3px #205067">Отправить</button>>
 
-        <input type="submit" value="Отправить">
-
-    </form>
-
-</body>
-</html>
+{% endblock %}
