@@ -22,7 +22,7 @@
         {{ post.content }}
     </div>
 
-    <form method="post" action="/post/{{ post.id }}/delete">
+    <form method="post" action="{% url 'post_delete' post.id %}">
 
         {% csrf_token %}
 
@@ -35,9 +35,7 @@
         </div>
     </form>
 
-    <form method="post" action="/post/{{ post.id }}/edit">
-
-        {% csrf_token %}
+    <a href="{% url 'post_edit' post.id %}" >
 
         <div>
             <label>
@@ -46,7 +44,7 @@
                 style="background-color: green; color: white; padding: 5px; border-radius: 5px">>
             </label>
         </div>
-    </form>
+    </a>
 
 </body>
 </html>

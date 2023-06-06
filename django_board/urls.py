@@ -15,14 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from todolist import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.home, name="home"),
-    path("create/", views.create_post, name="post_create"),
-    path("post/<int:post_id>", views.show_post, name="post_show"),
-    path("post/<int:post_id>/edit", views.edit_post, name="post_edit"),
-    path("post/<int:post_id>/delete", views.delete_post, name="post_delete")
+    path("post/", include("todolist.urls_tdl")),
 ]
