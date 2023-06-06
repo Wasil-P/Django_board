@@ -5,7 +5,7 @@ from .models import Post
 def home(request):
 
     posts = Post.objects.all()
-    return render(request, "home.html", {"posts": posts})
+    return render(request, "todolist/home.html", {"posts": posts})
 
 
 def create_post(request):
@@ -23,15 +23,15 @@ def create_post(request):
                 title=title,
                 content=content,)
             post.save()
-            return redirect(reverse("post:show", kwargs={"post_id": post.id}))
+            return redirect(reverse("post_show", kwargs={"post_id": post.id}))
 
-    return render(request, "create_post.html", {"errors": errors})
+    return render(request, "todolist/create_post.html", {"errors": errors})
 
 
 def show_post(request, post_id: int):
 
     post = get_object_or_404(Post, id=post_id)
-    return render(request, "show_post.html", {"post": post})
+    return render(request, "todolist/show_post.html", {"post": post})
 
 
 def edit_post(request, post_id: int):
@@ -55,7 +55,7 @@ def edit_post(request, post_id: int):
 
             return redirect(reverse("post_show", kwargs={"post_id": post_id}))
 
-    return render(request, "edit_post.html", {"errors": errors}, {"post": post})
+    return render(request, "todolist/edit_post.html", {"errors": errors, "post": post})
 
 
 def delete_post(request, post_id: int):
@@ -64,6 +64,6 @@ def delete_post(request, post_id: int):
     if request.method == "POST":
         post.delete()
     else:
-        return render(request, "show_post.html", {"post": post})
+        return render(request, "todolist/show_post.html", {"post": post})
 
-    return render(request,"delete.html", {"post": post})
+    return render(request, "todolist/delete.html", {"post": post})

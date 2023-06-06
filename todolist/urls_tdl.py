@@ -12,9 +12,11 @@ urlpatterns = [
 
 #     urls_class
 
-    path("", views_class.Home.as_view(), name="home"),
+
     path("create/", views_class.CreatePost.as_view(), name="post_create"),
     path("<int:post_id>", views_class.ShowPost.as_view(), name="post_show"),
     path("<int:post_id>/edit", views_class.EditPost.as_view(), name="post_edit"),
-    path("<int:post_id>/delete", views_class.DeletePost.as_view(), name="post_delete")
+    path("<int:post_id>/delete", views_class.DeletePost.as_view(), name="post_delete"),
+    path("user/", views_class.UsersApp.as_view(), name="users_app"),
+    path("discussion/", views_class.Discussion.as_view(), name="discussion")
 ]
