@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete</title>
-</head>
-<body>
+{% extends "todolist/base.html" %}
+
+
+{% block content %}
 
         <div>
-            <h1>
-                Пост успешно удалён
-            </h1>
 
-            <span style="background-color: #d9696a; color: white; padding: 5px; border-radius: 5px">>
+            <span class="badge d-flex align-items-center p-1 pe-2 text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill">
+                <img class="rounded-circle me-1" width="60" height="60" src="https://github.com/mdo.png" alt="">Пост успешно удалён!
             </span>
         </div>
 
@@ -20,11 +15,10 @@
         <div>
             <label>
                 Возврат на главную страницу
-                <input type="submit" value="Enter"
-                style="background-color: green; color: white; padding: 5px; border-radius: 5px">>
+                <button type="submit" class="btn btn-info" style="box-shadow: 3px 3px #10420e">Перейти</button>>
+
             </label>
         </div>
     </a>
 
-</body>
-</html>
+{% endblock %}

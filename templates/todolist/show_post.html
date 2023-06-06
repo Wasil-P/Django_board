@@ -1,50 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "todolist/base.html" %}
 
 
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }}</title>
-</head>
+{% block content %}
 
-
-<body>
-
-    <h1>
-        {{ post.title }}
-    </h1>
-
-    <span style="border-radius: 5px; background-color: #6f95e8; color: white; padding: 5px">
-        {{ post.created }}
-    </span>
-
-    <div style="margin: 20px">
-        {{ post.content }}
-    </div>
-
-    <form method="post" action="{% url 'post_delete' post.id %}">
-
-        {% csrf_token %}
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+          <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">{{ post.title }}</h4>
+          </div>
+          <div class="card-body">
+            <h3 <small class="text-body-secondary fw-light">{{ post.created }}</small></h3>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>{{ post.content }}</li>
+            </ul>
+          </div>
 
         <div>
-            <label>
-                Удаление поста
-                <input type="submit" value="Delete"
-                style="background-color: red; color: white; padding: 5px; border-radius: 5px">>
-            </label>
+            <form method="post" action="{% url 'post_delete' post.id %}">
+
+                {% csrf_token %}
+                <button type="submit" value="Delete" class="w-30 btn btn-lg btn-primary">Удаление поста</button>
+            </form>
+
+            <a href="{% url 'post_edit' post.id %}">
+                <button type="submit" value="Edit" class="w-30 btn btn-lg btn-primary">Редактирование поста</button>
+            </a>
         </div>
-    </form>
 
-    <a href="{% url 'post_edit' post.id %}" >
 
-        <div>
-            <label>
-                Редактирование поста
-                <input type="submit" value="Edit"
-                style="background-color: green; color: white; padding: 5px; border-radius: 5px">>
-            </label>
-        </div>
-    </a>
-
-</body>
-</html>
+{% endblock %}
