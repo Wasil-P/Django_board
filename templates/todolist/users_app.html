@@ -1,0 +1,30 @@
+{% extends "todolist/base.html" %}
+
+
+{% block content %}
+
+    {% for user in list_users %}
+
+        <ol class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Пользователь - {{ user.username }}</div>
+                    Создание последней заметки - {{ user.posts__created__max }}
+                </div>
+                <span class="badge bg-primary rounded-pill">Колличество заметок - {{ user.posts__count }}</span>
+            </li>
+        </ol>
+    {% endfor %}
+
+            <a href="{% url 'home'%}">
+
+        <div>
+            <label>
+                Возврат на главную страницу
+                <button type="submit" class="btn btn-info" style="box-shadow: 3px 3px #10420e">Перейти</button>>
+
+            </label>
+        </div>
+    </a>
+
+{% endblock %}

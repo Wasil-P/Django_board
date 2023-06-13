@@ -1,12 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import Post
-from django.views import View
+from django.views import View, generic
+from django.db.models import Count, Max
+from user.models import User as usermodel
+from django.contrib.auth import get_user_model
+from datetime import datetime, timedelta
 
+class PostsList(generic.View):
 
-class Home(View):
+    @staticmethod
+    def get_queryset():
+        return Post.objects.all().\
+            select_related("user").\
+            annotate(Count("comments")).\
+            values("id",  "title", "created", "user__username", "comments__count").order_by("-comments__count")
 
     def get(self, request):
-        posts = Post.objects.all()
+
+        posts = self.get_queryset()
         return render(request, "todolist/home.html", {"posts": posts})
 
 
@@ -88,3 +99,38 @@ class DeletePost(View):
         post = get_object_or_404(Post, id=post_id)
         post.delete()
         return render(request, "todolist/delete.html", {"post": post})
+
+
+User: usermodel = get_user_model()
+
+
+class UsersApp(View):
+
+    @staticmethod
+    def get_queryset():
+        return User.objects\
+            .select_related("todolist_post")\
+            .annotate(Count("posts"), Max("posts__created"))\
+            .values("id", "posts__count", "posts__created__max", "username")\
+            .order_by("-posts__count").exclude(posts__count=0)
+
+    def get(self, request):
+
+        list_users = self.get_queryset()
+        return render(request, "todolist/users_app.html", {"list_users": list_users})
+
+
+class Discussion(View):
+
+
+    @staticmethod
+    def get_queryset():
+        return Post.objects.all().select_related("todolist_comments", "user")\
+    .annotate(Count("comments__content", distinct=True)).values("id", "title", "user__username", "comments__content__count")\
+    .filter(comments__created__gte=(datetime.now() - timedelta(hours=12)))\
+    .order_by("-comments__content__count").exclude(comments__content__count=1)
+
+    def get(self, request):
+
+        list_title = self.get_queryset()
+        return render(request, "todolist/discussion.html", {"list_title": list_title})
