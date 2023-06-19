@@ -16,11 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from todolist import views
 from todolist import views_class
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("post/", include("todolist.urls_tdl")),
-    path("", views_class.PostsList.as_view(), name="home")
+    path("", views_class.PostsList.as_view(), name="home"),
+    path("user/", include("user.urls_user")),
 ]
