@@ -10,6 +10,10 @@ packages = [{include = "django_board"}]
 python = "^3.11"
 django = "^4.2.1"
 faker = "^18.10.1"
+django-crispy-forms = "^2.0"
+crispy-bootstrap5 = "^0.7"
+static = "^1.1.1"
+pillow = "^9.5.0"
 
 
 [build-system]

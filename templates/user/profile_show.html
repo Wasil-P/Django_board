@@ -3,15 +3,17 @@
 
 {% block content %}
 
-     <div class="container w-50">
-    <form method="post">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+    {{form_user | crispy}}
+    </div>
 
-        {% csrf_token %}
+         <a href="{% url 'edit_user' %}" >
+             <label>
+              Редактирование профиля
+                <button type="submit" class="btn btn-info" style="box-shadow: 3px 3px #10420e">Перейти</button>
+             </label>
+        </a>
 
-        {{form | crispy}}
-        <button type="submit" class="btn btn-info" style="box-shadow: 3px 3px #205067">Отправить</button>>
-
-    </form>
 
         <a href="{% url 'home'%}">
 
@@ -23,5 +25,5 @@
                 </label>
             </div>
         </a>
-     </div>
+
 {% endblock %}
