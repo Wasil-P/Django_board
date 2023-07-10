@@ -6,19 +6,19 @@ from user.models import User as usermodel
 from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
 
-class PostsList(generic.View):
 
-    @staticmethod
-    def get_queryset():
+class PostsList(generic.ListView):
+
+    template_name = "todolist/home.html"
+    context_object_name = "posts"
+    paginate_by = 6
+
+    def get_queryset(self):
         return Post.objects.all().\
             select_related("user").\
             annotate(Count("comments")).\
             values("id",  "title", "created", "user__username", "comments__count").order_by("-comments__count")
 
-    def get(self, request):
-
-        posts = self.get_queryset()
-        return render(request, "todolist/home.html", {"posts": posts})
 
 
 class ShowPost(View):
@@ -128,9 +128,9 @@ class Discussion(View):
         return Post.objects.all().select_related("todolist_comments", "user")\
     .annotate(Count("comments__content", distinct=True)).values("id", "title", "user__username", "comments__content__count")\
     .filter(comments__created__gte=(datetime.now() - timedelta(hours=12)))\
-    .order_by("-comments__content__count").exclude(comments__content__count=1)
+    .order_by("-comments__content__count").filter(comments__content__count__gt=2)
 
     def get(self, request):
 
-        list_title = self.get_queryset()
-        return render(request, "todolist/discussion.html", {"list_title": list_title})
+        list_posts = self.get_queryset()
+        return render(request, "todolist/discussion.html", {"list_posts": list_posts})
