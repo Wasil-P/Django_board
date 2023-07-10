@@ -136,8 +136,7 @@ class ShowProfile(View):
 
     def get(self, request):
         user = request.user
-        return render(request, "user/profile_show.html", {"form_user": EditProfileForm(
-            initial={"username": user.username, "email": user.email, "profile_picture": user.profile_picture})})
+        return render(request, "user/profile_show.html", {"user": user})
 
 
 class EditProfile(View):
@@ -146,7 +145,11 @@ class EditProfile(View):
     def get(self, request):
         user = request.user
         return render(request, "user/edit_user.html", {"form_user": EditProfileForm(
-            initial={"username": user.username, "email": user.email, "profile_picture": user.profile_picture})})
+            initial={"first_name": user.first_name,
+                     "last_name": user.last_name,
+                     "address": user.address,
+                     "phone": user.phone})})
+
     def post(self, request):
 
         form = EditProfileForm(request.POST)
@@ -156,13 +159,15 @@ class EditProfile(View):
             return render(request, "user/profile_show.html", {"form_user": form})
 
         with transaction.atomic():
-            username = form.cleaned_data["username"]
-            email = form.cleaned_data["email"]
-            profile_picture = form.cleaned_data["profile_picture"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            address = form.cleaned_data["address"]
+            phone = form.cleaned_data["phone"]
 
-            user.username = username
-            user.email = email
-            user.profile_picture = profile_picture
+            user.first_name = first_name
+            user.last_name = last_name
+            user.address = address
+            user.phone = phone
 
             user.save()
-        return redirect(reverse("user/profile_show", kwargs={"form_user": form}))
+        return redirect(reverse("profile_show", kwargs={"user": user}))
